@@ -17,8 +17,11 @@ mysqlclient==1.4.6
 2、修改setting.py 数据库连接信息  创建对应的数据库
 
 3、创建对应的表结构
+
 python manage.py makemigrations 
 python manage.py migrate
+
+
 4、创建账号
 python manage.py createsuperuser
 
