@@ -28,8 +28,16 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+#允许跨域访问
+CORS_ORIGIN_ALLOW_ALL = True
+LOGIN_URL='/admin/login'
 
 # Application definition
+AUTHENTICATION_BACKENDS = (
+    'oauth2_provider.backends.OAuth2Backend',
+    # Uncomment following if you want to access the admin
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 INSTALLED_APPS = [
     'polls.apps.PollsConfig',
@@ -39,16 +47,23 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'oauth2_provider',#oauth2
+    'corsheaders',#跨域访问
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    #'django.middleware.csrf.CsrfResponseMiddleware',
+    #'django.middleware.csrf.CsrfViewMiddleware',#一直在报403注释掉后 就不报了
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    #'django.contrib.auth.middleware.SessionAuthenticationMiddleware',#看官方教程说要加上这个 但是加上后报错直接注释掉
+    'oauth2_provider.middleware.OAuth2TokenMiddleware',#token验证中间件
+
 ]
 
 ROOT_URLCONF = 'dj3.urls'

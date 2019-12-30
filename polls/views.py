@@ -1,4 +1,5 @@
 from django.shortcuts import render,get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 from django.http import HttpResponse
@@ -37,4 +38,9 @@ def results(request,question_id):
 
 def vote(request,question_id):
     return HttpResponse("You're voting on question %s." % question_id)
+
+@login_required
+def login_test(request):
+
+    return HttpResponse("logined"+request.user.username)
 

@@ -15,8 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from django.conf import settings
+#from .views import ApiEndpoint
+from . import views
+
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('polls/',include('polls.urls'))
+    path('polls/',include('polls.urls')),
+    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+   # path('api/hello', ApiEndpoint.as_view()),  # an example resource endpoint
+    path('api/hellot', views.secret_page),  # an example resource endpoint
+    path('api/auth', views.auth),  # an example resource endpoint
+
 ]
